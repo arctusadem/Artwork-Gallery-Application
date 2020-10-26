@@ -1,15 +1,15 @@
 package com.example.restservice;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.example.DemoApplication;
-import com.example.accessingdatajpa.Customer;
+import com.example.model.CustomerModel;
 import com.example.accessingdatajpa.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,26 +32,34 @@ public class GreetingController {
     }
 
     @GetMapping("/rep")
-    public List<Customer> getCustomer(@RequestParam(value = "last-name") String lastName) {
+    public ResponseEntity<List<CustomerModel>> getCustomer(@RequestParam Map<String,String> customer) {
 
-        List<Customer> custom = repository.findByLastName(lastName);
-        Iterable<Customer> customers = repository.findAll();
+        List<CustomerModel> listCustomers = new ArrayList<>();
+
+        if (customer.containsKey("firstname"))
+            listCustomers = repository.findByFirstName(customer.get("firstname"));
+        else if (customer.containsKey("lastname"))
+            listCustomers = repository.findByLastName(customer.get("lastname"));
 
         log.info("-----------------------");
-        log.info("O costumer do ID: ", lastName);
-        log.info("-----------------------");
-        log.info("É o:", custom.toString());
+        log.info("Dados informados: " + customer.get("firstname") + " " + customer.get("lastname"));
         log.info("-----------------------");
 
-        for (Customer c : custom) {
-            log.info("É o Braia: ",c.getFirstName().toString());
+
+        log.info("Nomes da lista retornada:");
+        for (CustomerModel lc : listCustomers) {
+            log.info(lc.getFirstName() + " " + lc.getLastName());
         }
 
-        for (Customer c : customers) {
-            log.info("É o Tourette: ", c.toString());
+        log.info("-----------------------");
+
+        Iterable<CustomerModel> customers = repository.findAll();
+
+        for (CustomerModel c : customers) {
+            log.info("Cliente " + c.getId() + ": " + c.getFirstName() + " " + c.getLastName());
         }
 
-        return custom;
+        return ResponseEntity.ok(listCustomers);
 
     }
 }
