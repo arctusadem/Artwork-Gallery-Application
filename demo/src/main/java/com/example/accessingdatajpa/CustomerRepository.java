@@ -2,11 +2,14 @@ package com.example.accessingdatajpa;
 
 import java.util.List;
 
+import com.example.model.CustomerModel;
 import org.springframework.data.repository.CrudRepository;
 
-public interface CustomerRepository extends CrudRepository<Customer, Long> {
+public interface CustomerRepository extends CrudRepository<CustomerModel, Long> {
 
-    List<Customer> findByLastName(String lastName);
+    List<CustomerModel> findByFirstName(String firstName);
 
-    Customer findById(long id);
+    List<CustomerModel> findByLastName(String lastName);
+
+    CustomerModel findById(long id);
 }

@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.accessingdatajpa.Customer;
+import com.example.model.CustomerModel;
 import com.example.accessingdatajpa.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,25 +22,25 @@ public class DemoApplication {
 	public CommandLineRunner demo(CustomerRepository repository) {
 		return (args) -> {
 			// save a few customers
-			repository.save(new Customer("Jack", "Bauer"));
-			repository.save(new Customer("Chloe", "O'Brian"));
-			repository.save(new Customer("Kim", "Bauer"));
-			repository.save(new Customer("David", "Palmer"));
-			repository.save(new Customer("Michelle", "Dessler"));
+			repository.save(new CustomerModel("Jack", "Bauer"));
+			repository.save(new CustomerModel("Chloe", "O'Brian"));
+			repository.save(new CustomerModel("Kim", "Bauer"));
+			repository.save(new CustomerModel("David", "Palmer"));
+			repository.save(new CustomerModel("Michelle", "Dessler"));
 
 			// fetch all customers
 			log.info("Customers found with findAll():");
 			log.info("-------------------------------");
-			for (Customer customer : repository.findAll()) {
-				log.info(customer.toString());
+			for (CustomerModel customerModel : repository.findAll()) {
+				log.info(customerModel.toString());
 			}
 			log.info("");
 
 			// fetch an individual customer by ID
-			Customer customer = repository.findById(1L);
+			CustomerModel customerModel = repository.findById(1L);
 			log.info("Customer found with findById(1L):");
 			log.info("--------------------------------");
-			log.info(customer.toString());
+			log.info(customerModel.toString());
 			log.info("");
 
 			// fetch customers by last name
