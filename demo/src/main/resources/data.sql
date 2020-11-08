@@ -1,11 +1,12 @@
 DROP TABLE IF EXISTS TB_CUSTOMER;
 
 CREATE TABLE TB_CUSTOMER (
-  id INT AUTO_INCREMENT  PRIMARY KEY,
+  id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
   first_name VARCHAR(50) NOT NULL,
   last_name VARCHAR(150) NOT NULL,
   doc_type VARCHAR(30) NOT NULL,
-  doc_number VARCHAR(30) NOT NULL
+  doc_number VARCHAR(30) NOT NULL,
+  CONSTRAINT AK_docID UNIQUE(doc_type, doc_number)
 );
 
 INSERT INTO TB_CUSTOMER (first_name, last_name, doc_type, doc_number) VALUES
