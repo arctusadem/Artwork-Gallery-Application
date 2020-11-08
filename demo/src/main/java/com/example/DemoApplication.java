@@ -22,11 +22,11 @@ public class DemoApplication {
 	public CommandLineRunner demo(CustomerRepository repository) {
 		return (args) -> {
 			// save a few customers
-			repository.save(new CustomerModel("Jack", "Bauer"));
-			repository.save(new CustomerModel("Chloe", "O'Brian"));
-			repository.save(new CustomerModel("Kim", "Bauer"));
-			repository.save(new CustomerModel("David", "Palmer"));
-			repository.save(new CustomerModel("Michelle", "Dessler"));
+//			repository.save(new CustomerModel("Jack", "Bauer"));
+//			repository.save(new CustomerModel("Chloe", "O'Brian"));
+//			repository.save(new CustomerModel("Kim", "Bauer"));
+//			repository.save(new CustomerModel("David", "Palmer"));
+//			repository.save(new CustomerModel("Michelle", "Dessler"));
 
 			// fetch all customers
 			log.info("Customers found with findAll():");
@@ -40,15 +40,13 @@ public class DemoApplication {
 			CustomerModel customerModel = repository.findById(1L);
 			log.info("Customer found with findById(1L):");
 			log.info("--------------------------------");
-			log.info(customerModel.toString());
+			//log.info(customerModel.toString());
 			log.info("");
 
 			// fetch customers by last name
 			log.info("Customer found with findByLastName('Bauer'):");
 			log.info("--------------------------------------------");
-			repository.findByLastName("Bauer").forEach(bauer -> {
-				log.info(bauer.toString());
-			});
+			repository.findByLastName("Bauer").forEach(bauer -> log.info(bauer.toString()));
 			// for (Customer bauer : repository.findByLastName("Bauer")) {
 			//  log.info(bauer.toString());
 			// }
