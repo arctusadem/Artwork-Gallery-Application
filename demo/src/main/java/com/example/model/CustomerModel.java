@@ -1,11 +1,9 @@
 package com.example.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "TB_CUSTOMER")
 public class CustomerModel {
 
     @Id
@@ -13,19 +11,31 @@ public class CustomerModel {
     private Long id;
     private String firstName;
     private String lastName;
+    private String docType;
+    private String docNumber;
 
     protected CustomerModel() {}
 
-    public CustomerModel(String firstName, String lastName) {
+    public CustomerModel(Long id, String firstName, String lastName, String docType, String docNumber) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.docType = docType;
+        this.docNumber = docNumber;
+    }
+
+    public CustomerModel(String firstName, String lastName, String docType, String docNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.docType = docType;
+        this.docNumber = docNumber;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Customer[id=%d, firstName='%s', lastName='%s']",
-                id, firstName, lastName);
+                "Customer[id=%d, firstName='%s', lastName='%s', docType='%s', docNumber='%s']",
+                id, firstName, lastName, docType, docNumber);
     }
 
     public Long getId() {
@@ -38,5 +48,13 @@ public class CustomerModel {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getDocType() {
+        return docType;
+    }
+
+    public String getDocNumber() {
+        return docNumber;
     }
 }
