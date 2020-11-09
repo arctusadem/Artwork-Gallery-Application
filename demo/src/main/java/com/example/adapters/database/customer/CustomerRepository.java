@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CustomerRepository extends CrudRepository<CustomerModel, Long> {
+public interface CustomerRepository extends CrudRepository<CustomerModel, String> {
 
     List<CustomerModel> findByFirstName(Optional<String> firstName);
 
@@ -20,5 +20,6 @@ public interface CustomerRepository extends CrudRepository<CustomerModel, Long> 
     @Query(value = "SELECT * FROM TB_CUSTOMER WHERE DOC_TYPE = :doctype AND DOC_NUMBER = :docnumber", nativeQuery = true)
     List<CustomerModel> findByDocTypeAndDocNumber(@Param(value = "doctype") Optional<String> docType, @Param(value = "docnumber") Optional<String> docNumber);
 
-    CustomerModel findById(UUID id);
+    @Query(value = "SELECT * FROM TB_CUSTOMER WHERE id_customer = :idCustomer", nativeQuery = true)
+    CustomerModel findByIdCustomer(@Param(value = "idCustomer")String idCustomer);
 }

@@ -50,7 +50,7 @@ public class FindCustomer implements FindCustomerPort {
         Iterable<CustomerModel> customers = customerRepository.findAll();
 
         for (CustomerModel c : customers) {
-            log.info("Cliente " + c.getId() + ": " + c.getFirstName() + " " + c.getLastName());
+            log.info("Cliente " + c.getIdCustomer() + ": " + c.getFirstName() + " " + c.getLastName());
         }
 
         List<Customer> listCustomers = new ArrayList<>();

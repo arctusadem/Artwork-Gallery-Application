@@ -4,6 +4,8 @@ import com.example.core.domain.customer.CreateCustomerPort;
 import com.example.core.domain.customer.Customer;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class CreateCustomer implements CreateCustomerPort {
 
@@ -16,6 +18,7 @@ public class CreateCustomer implements CreateCustomerPort {
     @Override
     public void createCustomer(Customer customer) {
         CustomerModel customerModel = CustomerConverter.toModel(customer);
+        customerModel.setIdCustomer(String.valueOf(UUID.randomUUID()));
         customerRepository.save(customerModel);
     }
 }
