@@ -6,10 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class FindCustomer implements FindCustomerPort {
@@ -47,16 +44,11 @@ public class FindCustomer implements FindCustomerPort {
 
         log.info("-----------------------");
 
-        Iterable<CustomerModel> customers = customerRepository.findAll();
-
-        for (CustomerModel c : customers) {
-            log.info("Cliente " + c.getIdCustomer() + ": " + c.getFirstName() + " " + c.getLastName());
-        }
-
         List<Customer> listCustomers = new ArrayList<>();
 
-        for (CustomerModel c : customers) {
+        for (CustomerModel c : listCustomersModel) {
             Customer customer = new Customer();
+            customer.setIdCustomer(UUID.fromString(c.getIdCustomer()));
             customer.setFirstName(c.getFirstName());
             customer.setLastName(c.getLastName());
             customer.setDocType(c.getDocType());
