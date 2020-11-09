@@ -1,4 +1,4 @@
-package com.example.model;
+package com.example.adapters.database.customer;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -8,7 +8,7 @@ import java.util.UUID;
 public class CustomerModel {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    private String idCustomer;
     private String firstName;
     private String lastName;
     private String docType;
@@ -27,11 +27,11 @@ public class CustomerModel {
     public String toString() {
         return String.format(
                 "Customer[uuid=%s, firstName='%s', lastName='%s', docType='%s', docNumber='%s']",
-                id, firstName, lastName, docType, docNumber);
+                idCustomer, firstName, lastName, docType, docNumber);
     }
 
-    public UUID getId() {
-        return id;
+    public String getIdCustomer() {
+        return idCustomer;
     }
 
     public String getFirstName() {
@@ -49,6 +49,8 @@ public class CustomerModel {
     public String getDocNumber() {
         return docNumber;
     }
+
+    public void setIdCustomer(String idCustomer) { this.idCustomer=idCustomer; }
 
     public void setFirstName(String firstName) { this.firstName = firstName; }
 

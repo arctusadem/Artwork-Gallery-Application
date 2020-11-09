@@ -1,7 +1,7 @@
 package com.example;
 
-import com.example.model.CustomerModel;
-import com.example.accessingdatajpa.CustomerRepository;
+import com.example.adapters.database.customer.CustomerModel;
+import com.example.adapters.database.customer.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -9,9 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -22,7 +20,7 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class);
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner demo(CustomerRepository repository) {
 		return (args) -> {
 			// save a few customers
@@ -56,5 +54,5 @@ public class DemoApplication {
 			// }
 			log.info("");
 		};
-	}
+	}*/
 }
