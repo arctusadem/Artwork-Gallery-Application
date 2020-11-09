@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -41,15 +42,15 @@ public class DemoApplication {
 
 			// fetch an individual customer by ID
 			log.info("Customer found with findByDocTypeAndDocNumber(CPF, 185.323.128-29):");
-			CustomerModel customerModel = repository.findByDocTypeAndDocNumber("CPF", "185.323.128-29");
-			log.info(customerModel.toString());
+			//List<CustomerModel> customerModel = repository.findByDocTypeAndDocNumber("CPF", "185.323.128-29");
+			//log.info(customerModel.toString());
 			log.info("--------------------------------");
 			log.info("");
 
 			// fetch customers by last name
 			log.info("Customer found with findByLastName('Machado'):");
 			log.info("--------------------------------------------");
-			repository.findByLastName("Machado").forEach(machado -> log.info(machado.toString()));
+			repository.findByLastName(Optional.of("Machado")).forEach(machado -> log.info(machado.toString()));
 			// for (Customer bauer : repository.findByLastName("Bauer")) {
 			//  log.info(bauer.toString());
 			// }
