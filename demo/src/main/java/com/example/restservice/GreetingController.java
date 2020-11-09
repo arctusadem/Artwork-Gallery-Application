@@ -3,6 +3,7 @@ package com.example.restservice;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.example.model.CustomerModel;
@@ -29,37 +30,5 @@ public class GreetingController {
     @GetMapping("/greeting")
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
         return new Greeting(counter.incrementAndGet(), String.format(template, name));
-    }
-
-    @GetMapping("/rep")
-    public ResponseEntity<List<CustomerModel>> getCustomer(@RequestParam Map<String,String> customer) {
-
-        List<CustomerModel> listCustomers = new ArrayList<>();
-
-        if (customer.containsKey("firstname"))
-            listCustomers = repository.findByFirstName(customer.get("firstname"));
-        else if (customer.containsKey("lastname"))
-            listCustomers = repository.findByLastName(customer.get("lastname"));
-
-        log.info("-----------------------");
-        log.info("Dados informados: " + customer.get("firstname") + " " + customer.get("lastname"));
-        log.info("-----------------------");
-
-
-        log.info("Nomes da lista retornada:");
-        for (CustomerModel lc : listCustomers) {
-            log.info(lc.getFirstName() + " " + lc.getLastName());
-        }
-
-        log.info("-----------------------");
-
-        Iterable<CustomerModel> customers = repository.findAll();
-
-        for (CustomerModel c : customers) {
-            log.info("Cliente " + c.getId() + ": " + c.getFirstName() + " " + c.getLastName());
-        }
-
-        return ResponseEntity.ok(listCustomers);
-
     }
 }

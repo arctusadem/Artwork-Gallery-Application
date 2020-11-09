@@ -1,7 +1,5 @@
 package com.example.model;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -51,4 +49,12 @@ public class CustomerModel {
     public String getDocNumber() {
         return docNumber;
     }
+
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public void setDocType(String docType) { this.docType = docType; }
+
+    public void setDocNumber(String docNumber) { this.docNumber = docNumber; }
 }
