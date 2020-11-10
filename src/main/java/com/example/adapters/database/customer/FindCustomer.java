@@ -25,11 +25,11 @@ public class FindCustomer implements FindCustomerPort {
         List<CustomerModel> listCustomersModel = new ArrayList<>();
 
         if (customerSearchValues.containsKey("firstname"))
-            listCustomersModel = customerRepository.findByFirstName(Optional.of(customerSearchValues.get("firstname")));
+            listCustomersModel = customerRepository.findByFirstName(customerSearchValues.get("firstname"));
         else if (customerSearchValues.containsKey("lastname"))
-            listCustomersModel = customerRepository.findByLastName(Optional.of(customerSearchValues.get("lastname")));
+            listCustomersModel = customerRepository.findByLastName(customerSearchValues.get("lastname"));
         else if (customerSearchValues.containsKey("doctype") && customerSearchValues.containsKey("docnumber"))
-            listCustomersModel = customerRepository.findByDocTypeAndDocNumber(Optional.of(customerSearchValues.get("doctype")), Optional.of(customerSearchValues.get("docnumber")));
+            listCustomersModel = customerRepository.findByDocTypeAndDocNumber(customerSearchValues.get("doctype"), customerSearchValues.get("docnumber"));
 
 
         log.info("-----------------------");

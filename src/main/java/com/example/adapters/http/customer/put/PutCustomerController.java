@@ -1,11 +1,14 @@
 package com.example.adapters.http.customer.put;
 
+import com.example.core.domain.customer.Customer;
 import com.example.core.usecases.ExcludeCustomer;
 import com.example.core.usecases.UpdateCustomerRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("customer")
@@ -22,43 +25,43 @@ public class PutCustomerController {
 
     private static final Logger log = LoggerFactory.getLogger(PutCustomerController.class);
 
-    /*@PutMapping("/update")
+    @PutMapping("/update")
     public void updateCustomer (@RequestParam(value = "id") UUID id,
-                                @RequestParam(value = "firstname") Optional<String> firstName,
-                                @RequestParam(value = "lastname") Optional<String> lastName,
-                                @RequestParam(value = "doctype") Optional<String> docType,
-                                @RequestParam(value = "docnumber") Optional<String> docNumber) {
+                                @RequestParam(value = "firstname", required = false) String firstName,
+                                @RequestParam(value = "lastname", required = false) String lastName,
+                                @RequestParam(value = "doctype", required = false) String docType,
+                                @RequestParam(value = "docnumber", required = false) String docNumber) {
 
-        CustomerModel customer = repository.findById(id);
+        Customer customer = new Customer();
 
-        if(firstName.isPresent())
-            customer.setFirstName(firstName.get());
-        if(lastName.isPresent())
-            customer.setLastName(lastName.get());
-        if(docType.isPresent())
-            customer.setDocType(docType.get());
-        if(docNumber.isPresent())
-            customer.setDocNumber(docNumber.get());
+        customer.setIdCustomer(id);
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setDocType(docType);
+        customer.setDocNumber(docNumber);
 
-        repository.save(customer);
+        updateCustomerRegistration.execute(customer);
 
-    }*/
+    }
 
-    /*@GetMapping("/delete")
-    public void deleteCustomer (@RequestParam(value = "firstname") Optional<String> firstName, @RequestParam(value = "lastname") Optional<String> lastName,
-                                @RequestParam(value = "doctype") Optional<String> docType, @RequestParam(value = "docnumber") Optional<String> docNumber) {
+    @PutMapping("/delete")
+    public void deleteCustomer (@RequestParam(value = "id", required = false) UUID id,
+                                @RequestParam(value = "firstname", required = false) String firstName,
+                                @RequestParam(value = "lastname", required = false) String lastName,
+                                @RequestParam(value = "doctype", required = false) String docType,
+                                @RequestParam(value = "docnumber", required = false) String docNumber) {
 
-        List<CustomerModel> customer = null;
+        Customer customer = new Customer();
 
-        if(firstName.isPresent())
-            customer = repository.findByFirstName(firstName);
-        else if(lastName.isPresent())
-            customer = repository.findByLastName(lastName);
-        else if(docType.isPresent() && docNumber.isPresent())
-            customer = repository.findByDocTypeAndDocNumber(docType, docNumber);
+        customer.setIdCustomer(id);
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setDocType(docType);
+        customer.setDocNumber(docNumber);
 
-        repository.deleteAll(customer);
-    }*/
+        excludeCustomer.execute(customer);
+
+    }
 
 
 }
