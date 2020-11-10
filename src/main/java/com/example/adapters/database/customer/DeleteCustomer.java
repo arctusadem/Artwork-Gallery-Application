@@ -12,8 +12,6 @@ public class DeleteCustomer implements DeleteCustomerPort {
 
     private final CustomerRepository customerRepository;
 
-    List<CustomerModel> customer = null;
-
     public DeleteCustomer(CustomerRepository customerRepository) { this.customerRepository = customerRepository; }
 
     @Override

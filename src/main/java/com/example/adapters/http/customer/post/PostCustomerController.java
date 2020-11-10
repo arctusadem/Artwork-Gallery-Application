@@ -22,6 +22,8 @@ public class PostCustomerController {
     public void registerCustomer (@RequestParam(value = "firstname") String firstName, @RequestParam(value = "lastname") String lastName,
                                   @RequestParam(value = "doctype") String docType, @RequestParam(value = "docnumber") String docNumber) {
 
+        //TODO Change @RequestParam to @RequestBody with the required validations
+
         Customer customer = new Customer();
         customer.setFirstName(firstName);
         customer.setLastName(lastName);

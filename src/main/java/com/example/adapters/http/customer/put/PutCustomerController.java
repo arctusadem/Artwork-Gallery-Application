@@ -50,7 +50,8 @@ public class PutCustomerController {
                                 @RequestParam(value = "lastname", required = false) String lastName,
                                 @RequestParam(value = "doctype", required = false) String docType,
                                 @RequestParam(value = "docnumber", required = false) String docNumber) {
-
+        
+        //TODO Why don't you use just the id to delete the customer?
         Customer customer = new Customer();
 
         customer.setIdCustomer(id);
