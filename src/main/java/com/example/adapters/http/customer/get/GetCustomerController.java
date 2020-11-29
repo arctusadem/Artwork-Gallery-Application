@@ -5,6 +5,7 @@ import com.example.core.usecases.SearchForCustomer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +26,7 @@ public class GetCustomerController {
     private static final Logger log = LoggerFactory.getLogger(GetCustomerController.class);
 
     @GetMapping("/search")
-    public ResponseEntity<List<Customer>> getCustomer(@RequestParam Map<String,String> customerSearchValues) {
+    public ResponseEntity<List<Customer>> getCustomer(@RequestParam @Validated Map<String,String> customerSearchValues) {
 
         List<Customer> listCustomers = searchForCustomer.execute(customerSearchValues);
         return ResponseEntity.ok(listCustomers);

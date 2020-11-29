@@ -4,7 +4,10 @@ import com.example.core.domain.customer.Customer;
 import com.example.core.usecases.RegisterNewCustomer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("customer")
@@ -18,17 +21,14 @@ public class PostCustomerController {
 
     private static final Logger log = LoggerFactory.getLogger(PostCustomerController.class);
 
-    @PostMapping("/register")
-    public void registerCustomer (@RequestParam(value = "firstname") String firstName, @RequestParam(value = "lastname") String lastName,
-                                  @RequestParam(value = "doctype") String docType, @RequestParam(value = "docnumber") String docNumber) {
-
-        //TODO Change @RequestParam to @RequestBody with the required validations
+    @PostMapping(value = "/register", consumes = "application/json")
+    public void registerCustomer (@RequestBody @Validated Map<String,String> body) {
 
         Customer customer = new Customer();
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        customer.setDocType(docType);
-        customer.setDocNumber(docNumber);
+        customer.setFirstName(body.get("firstname"));
+        customer.setLastName(body.get("lastname"));
+        customer.setDocType(body.get("doctype"));
+        customer.setDocNumber(body.get("docnumber"));
 
         registerNewCustomer.execute(customer);
         log.info("Customer has been registered: {}",customer);
