@@ -45,20 +45,11 @@ public class PutCustomerController {
     }
 
     @PutMapping("/delete")
-    public void deleteCustomer (@RequestParam(value = "id", required = false) UUID id,
-                                @RequestParam(value = "firstname", required = false) String firstName,
-                                @RequestParam(value = "lastname", required = false) String lastName,
-                                @RequestParam(value = "doctype", required = false) String docType,
-                                @RequestParam(value = "docnumber", required = false) String docNumber) {
+    public void deleteCustomer (@RequestParam(value = "id", required = false) UUID id) {
         
-        //TODO Why don't you use just the id to delete the customer?
         Customer customer = new Customer();
 
         customer.setIdCustomer(id);
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        customer.setDocType(docType);
-        customer.setDocNumber(docNumber);
 
         excludeCustomer.execute(customer);
 
