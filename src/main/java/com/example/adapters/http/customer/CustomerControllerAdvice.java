@@ -1,5 +1,6 @@
 package com.example.adapters.http.customer;
 
+import com.example.exceptions.CustomerDuplicityException;
 import com.example.exceptions.DataNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,9 +19,8 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 public class CustomerControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ ConstraintViolationException.class })
-    public ResponseEntity<Object> handleConstraintViolation(
-            ConstraintViolationException ex) {
-        List<String> errors = new ArrayList<String>();
+    public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex) {
+        List<String> errors = new ArrayList<>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
             errors.add(violation.getRootBeanClass().getName() + " " +
                     violation.getPropertyPath() + ": " + violation.getMessage());
@@ -34,10 +34,16 @@ public class CustomerControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DataNotFoundException.class)
     public ResponseEntity<Object> CustomerNotFoundExceptionHandler (DataNotFoundException ex, WebRequest request){
 
-        List<String> errors = new ArrayList<String>();
+        ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST, ex.getLocalizedMessage());
 
-        ErrorResponse errorResponse =
-                new ErrorResponse(BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
+    }
+
+    @ExceptionHandler(CustomerDuplicityException.class)
+    public ResponseEntity<Object> CustomerDuplicityExceptionHandler (CustomerDuplicityException ex, WebRequest request){
+
+        ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST, ex.getLocalizedMessage());
+
         return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
     }
 }

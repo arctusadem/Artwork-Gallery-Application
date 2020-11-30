@@ -14,6 +14,7 @@ public class RequestPutCustomer {
         }
 
         @JsonProperty("id")
+        @NotNull
         private UUID id;
 
         @JsonProperty("firstname")

@@ -2,6 +2,7 @@ package com.example.adapters.database.customer;
 
 import com.example.core.domain.customer.CreateCustomerPort;
 import com.example.core.domain.customer.Customer;
+import com.example.exceptions.CustomerDuplicityException;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -17,8 +18,12 @@ public class CreateCustomer implements CreateCustomerPort {
 
     @Override
     public void createCustomer(Customer customer) {
-        CustomerModel customerModel = CustomerConverter.toModel(customer);
-        customerModel.setIdCustomer(String.valueOf(UUID.randomUUID()));
-        customerRepository.save(customerModel);
+        try {
+            CustomerModel customerModel = CustomerConverter.toModel(customer);
+            customerModel.setIdCustomer(String.valueOf(UUID.randomUUID()));
+            customerRepository.save(customerModel);
+        } catch (Exception ex) {
+            throw new CustomerDuplicityException();
+        }
     }
 }

@@ -12,9 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Map;
-
 @RestController
 @Validated
 @RequestMapping("customer")
@@ -41,6 +38,6 @@ public class PostCustomerController {
             registerNewCustomer.execute(customer);
             log.info("Customer has been registered: {}", customer);
 
-        return new ResponseEntity<Object>(new HttpHeaders(), HttpStatus.CREATED);
+        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.CREATED);
     }
 }

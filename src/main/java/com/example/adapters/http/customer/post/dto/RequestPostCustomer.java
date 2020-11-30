@@ -1,9 +1,7 @@
 package com.example.adapters.http.customer.post.dto;
 
-//import com.example.exceptions.MissingInformationException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -15,7 +13,6 @@ public class RequestPostCustomer {
     }
 
     @JsonProperty("firstname")
-    @Valid
     @NotBlank
     private String firstName;
 
