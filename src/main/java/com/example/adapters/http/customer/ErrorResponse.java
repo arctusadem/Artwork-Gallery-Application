@@ -18,6 +18,12 @@ public class ErrorResponse {
         this.errors = errors;
     }
 
+    public ErrorResponse(HttpStatus status, String message) {
+        super();
+        this.status = status;
+        this.message = message;
+    }
+
     public ErrorResponse(HttpStatus status, String message, String error) {
         super();
         this.status = status;

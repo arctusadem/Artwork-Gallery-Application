@@ -1,8 +1,10 @@
 package com.example.adapters.http.customer;
 
+import com.example.exceptions.DataNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.ConstraintViolation;
@@ -29,6 +31,13 @@ public class CustomerControllerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
     }
 
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity<Object> CustomerNotFoundExceptionHandler (DataNotFoundException ex, WebRequest request){
 
-    //DONE out of the package
+        List<String> errors = new ArrayList<String>();
+
+        ErrorResponse errorResponse =
+                new ErrorResponse(BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
+    }
 }
