@@ -1,5 +1,8 @@
 package com.example.adapters.http.customer.put;
 
+import com.example.adapters.http.customer.post.dto.RequestPostCustomer;
+import com.example.adapters.http.customer.put.dto.PutCustomerConverter;
+import com.example.adapters.http.customer.put.dto.RequestPutCustomer;
 import com.example.core.domain.customer.Customer;
 import com.example.core.usecases.ExcludeCustomer;
 import com.example.core.usecases.UpdateCustomerRegistration;
@@ -15,45 +18,20 @@ import java.util.UUID;
 public class PutCustomerController {
 
     private final UpdateCustomerRegistration updateCustomerRegistration;
-    private final ExcludeCustomer excludeCustomer;
 
-    public PutCustomerController(UpdateCustomerRegistration updateCustomerRegistration,
-                                 ExcludeCustomer excludeCustomer){
+
+    public PutCustomerController(UpdateCustomerRegistration updateCustomerRegistration){
         this.updateCustomerRegistration = updateCustomerRegistration;
-        this.excludeCustomer=excludeCustomer;
     }
 
     private static final Logger log = LoggerFactory.getLogger(PutCustomerController.class);
 
     @PutMapping("/update")
-    public void updateCustomer (@RequestParam(value = "id") UUID id,
-                                @RequestParam(value = "firstname", required = false) String firstName,
-                                @RequestParam(value = "lastname", required = false) String lastName,
-                                @RequestParam(value = "doctype", required = false) String docType,
-                                @RequestParam(value = "docnumber", required = false) String docNumber) {
+    public void updateCustomer (@RequestBody RequestPutCustomer body) {
 
-        Customer customer = new Customer();
-
-        customer.setIdCustomer(id);
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        customer.setDocType(docType);
-        customer.setDocNumber(docNumber);
+        Customer customer = PutCustomerConverter.toDomain(body);
 
         updateCustomerRegistration.execute(customer);
 
     }
-
-    @PutMapping("/delete")
-    public void deleteCustomer (@RequestParam(value = "id", required = false) UUID id) {
-        
-        Customer customer = new Customer();
-
-        customer.setIdCustomer(id);
-
-        excludeCustomer.execute(customer);
-
-    }
-
-
 }

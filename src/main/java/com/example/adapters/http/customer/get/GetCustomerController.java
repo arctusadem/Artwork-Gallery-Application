@@ -26,7 +26,7 @@ public class GetCustomerController {
     private static final Logger log = LoggerFactory.getLogger(GetCustomerController.class);
 
     @GetMapping("/search")
-    public ResponseEntity<List<Customer>> getCustomer(@RequestParam @Validated Map<String,String> customerSearchValues) {
+    public ResponseEntity<List<Customer>> getCustomer(@RequestParam Map<String,String> customerSearchValues) {
 
         List<Customer> listCustomers = searchForCustomer.execute(customerSearchValues);
         return ResponseEntity.ok(listCustomers);

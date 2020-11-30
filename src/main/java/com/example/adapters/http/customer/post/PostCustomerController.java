@@ -1,5 +1,7 @@
 package com.example.adapters.http.customer.post;
 
+import com.example.adapters.http.customer.post.dto.PostCustomerConverter;
+import com.example.adapters.http.customer.post.dto.RequestPostCustomer;
 import com.example.core.domain.customer.Customer;
 import com.example.core.usecases.RegisterNewCustomer;
 import org.slf4j.Logger;
@@ -22,13 +24,9 @@ public class PostCustomerController {
     private static final Logger log = LoggerFactory.getLogger(PostCustomerController.class);
 
     @PostMapping(value = "/register", consumes = "application/json")
-    public void registerCustomer (@RequestBody @Validated Map<String,String> body) {
+    public void registerCustomer (@RequestBody @Validated RequestPostCustomer body) {
 
-        Customer customer = new Customer();
-        customer.setFirstName(body.get("firstname"));
-        customer.setLastName(body.get("lastname"));
-        customer.setDocType(body.get("doctype"));
-        customer.setDocNumber(body.get("docnumber"));
+        Customer customer = PostCustomerConverter.toDomain(body);
 
         registerNewCustomer.execute(customer);
         log.info("Customer has been registered: {}",customer);
