@@ -4,5 +4,4 @@ public interface CreateCustomerPort {
 
     void createCustomer(Customer customer);
 
-
 }
