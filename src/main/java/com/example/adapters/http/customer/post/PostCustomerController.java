@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @Validated
 @RequestMapping("customer")
@@ -34,6 +36,7 @@ public class PostCustomerController {
             requestPostValidator.valid(body);
 
             Customer customer = PostCustomerConverter.toDomain(body);
+            customer.setIdCustomer(UUID.randomUUID());
 
             registerNewCustomer.execute(customer);
             log.info("Customer has been registered: {}", customer);

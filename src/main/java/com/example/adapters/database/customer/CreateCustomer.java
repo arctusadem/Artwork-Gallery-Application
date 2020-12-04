@@ -20,7 +20,6 @@ public class CreateCustomer implements CreateCustomerPort {
     public void createCustomer(Customer customer) {
         try {
             CustomerModel customerModel = CustomerConverter.toModel(customer);
-            customerModel.setIdCustomer(String.valueOf(UUID.randomUUID()));
             customerRepository.save(customerModel);
         } catch (Exception ex) {
             throw new CustomerConflictException();
