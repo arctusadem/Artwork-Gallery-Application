@@ -15,37 +15,38 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, properties = {"spring.h2.console.enabled=true","server.port=8100"})
-class CreateCustomerTest {
+public class DeleteCustomerTest {
 
     @Autowired
     private CustomerRepository customerRepository;
 
     @Test
-    @DisplayName("When the customer there is not in the database, So create a new customer")
-    public void When_the_customer_there_is_not_in_the_database_So_create_new_customer(){
+    @DisplayName("Delete a customer in the database if the ID exists")
+    public void Delete_a_customer_in_the_database_if_the_ID_exists () {
 
         Customer customer = new Customer();
         customer.setIdCustomer(UUID.randomUUID());
-        customer.setFirstName("Henrique");
-        customer.setLastName("Assumpção");
+        customer.setFirstName("Bruno");
+        customer.setLastName("Salgado");
         customer.setDocType("1");
-        customer.setDocNumber("123456789");
+        customer.setDocNumber("987654321");
 
         CreateCustomer createCustomer = new CreateCustomer(customerRepository);
         createCustomer.createCustomer(customer);
 
-        Optional<CustomerModel> optionalCustomerModel = customerRepository.findByIdCustomer(String.valueOf(customer.getIdCustomer()));
+        Optional<CustomerModel> optionalCreatedCustomerModel = customerRepository.findByIdCustomer(String.valueOf(customer.getIdCustomer()));
 
-        assertTrue(optionalCustomerModel.isPresent());
+        assertTrue(optionalCreatedCustomerModel.isPresent());
 
-        CustomerModel customerModel = optionalCustomerModel.get();
-        Customer customerCreated = CustomerConverter.toEntity(customerModel);
+        Customer customerToBeDeleted = new Customer();
+        customerToBeDeleted.setIdCustomer(customer.getIdCustomer());
 
-        assertEquals(customer.getFirstName(),customerCreated.getFirstName());
-        assertEquals(customer.getLastName(),customerCreated.getLastName());
-        assertEquals(customer.getDocType(),customerCreated.getDocType());
-        assertEquals(customer.getDocNumber(),customerCreated.getDocNumber());
+        DeleteCustomer deleteCustomer = new DeleteCustomer(customerRepository);
+        deleteCustomer.deleteCustomer(customerToBeDeleted);
+
+        Optional<CustomerModel> optionalDeletedCustomerModel = customerRepository.findByIdCustomer(String.valueOf(customer.getIdCustomer()));
+
+        assertTrue(optionalDeletedCustomerModel.isEmpty());
 
     }
-
 }
