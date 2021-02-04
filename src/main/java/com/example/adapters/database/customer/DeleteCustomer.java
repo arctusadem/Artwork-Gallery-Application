@@ -17,7 +17,7 @@ public class DeleteCustomer implements DeleteCustomerPort {
         CustomerModel customerToDelete = null;
 
         if (customer.getIdCustomer() != null)
-            customerToDelete = customerRepository.findByIdCustomer(customer.getIdCustomer().toString());
+            customerToDelete = customerRepository.findByIdCustomer(customer.getIdCustomer().toString()).get();
 
         customerRepository.delete(customerToDelete);
     }

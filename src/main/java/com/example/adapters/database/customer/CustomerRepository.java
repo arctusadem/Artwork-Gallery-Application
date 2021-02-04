@@ -1,6 +1,7 @@
 package com.example.adapters.database.customer;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -18,5 +19,5 @@ public interface CustomerRepository extends CrudRepository<CustomerModel, String
     List<CustomerModel> findByDocTypeAndDocNumber(@Param(value = "doctype") String docType, @Param(value = "docnumber") String docNumber);
 
     @Query(value = "SELECT * FROM TB_CUSTOMER WHERE id_customer = :idCustomer", nativeQuery = true)
-    CustomerModel findByIdCustomer(@Param(value = "idCustomer")String idCustomer);
+    Optional<CustomerModel> findByIdCustomer(@Param(value = "idCustomer")String idCustomer);
 }

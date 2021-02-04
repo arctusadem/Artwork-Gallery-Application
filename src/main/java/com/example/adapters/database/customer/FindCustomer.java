@@ -23,7 +23,7 @@ public class FindCustomer implements FindCustomerPort {
 
     @Override
     public List<Customer> findCustomer(Map<String, String> customerSearchValues) {
-        List<CustomerModel> listCustomersModel = new ArrayList<>();
+        List<CustomerModel> listCustomersModel;
 
         if (customerSearchValues.containsKey("firstname"))
             listCustomersModel = customerRepository.findByFirstName(customerSearchValues.get("firstname"));
@@ -31,6 +31,8 @@ public class FindCustomer implements FindCustomerPort {
             listCustomersModel = customerRepository.findByLastName(customerSearchValues.get("lastname"));
         else if (customerSearchValues.containsKey("doctype") && customerSearchValues.containsKey("docnumber"))
             listCustomersModel = customerRepository.findByDocTypeAndDocNumber(customerSearchValues.get("doctype"), customerSearchValues.get("docnumber"));
+        else
+            listCustomersModel = null;
 
         if (listCustomersModel.isEmpty())
             throw new DataNotFoundException();

@@ -16,7 +16,7 @@ public class UpdateCustomer implements UpdateCustomerPort {
     @Override
     public void updateCustomer(Customer customer){
 
-        CustomerModel customerModel = customerRepository.findByIdCustomer(String.valueOf(customer.getIdCustomer()));
+        CustomerModel customerModel = customerRepository.findByIdCustomer(String.valueOf(customer.getIdCustomer())).get();
 
         if(customerModel == null)
             throw new RuntimeException("Cliente não encontrado!");
